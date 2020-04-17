@@ -30,11 +30,11 @@
 </head>
 
 <body>
-    <h1>Geoff's Auto Update Example</h1>
+    <h1>Geoff's Auto Update On Quit</h1>
 
     <p id="version"></p>
 
-    <!-- Divs to display update messages-->
+    <!-- Divs to display update messages
     <div id="notification" class="hidden">
         <p id="message"></p>
         <button id="close-button" onClick="closeNotification()">
@@ -44,7 +44,7 @@
             Restart
         </button>
     </div>
-
+    -->
     <script>
         const { ipcRenderer } = require('electron');
         const version = document.getElementById('version');
@@ -54,6 +54,7 @@
             ipcRenderer.removeAllListeners('app_version');
             version.innerText = 'Version ' + arg.version;
         });
+        /*
         //Code to listen and display notifications for auto update
         const notification = document.getElementById('notification');
         const message = document.getElementById('message');
@@ -77,5 +78,6 @@
         function restartApp() {
             ipcRenderer.send('restart_app');
         }
+        */
     </script>
 </body>

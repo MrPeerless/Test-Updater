@@ -19,10 +19,14 @@ function createWindow() {
     });
 
     // Add check for updates
-    mainWindow.once('ready-to-show', () => {
-        autoUpdater.checkForUpdatesAndNotify();
-    });
+    //mainWindow.once('ready-to-show', () => {
+    //    autoUpdater.checkForUpdatesAndNotify();
+    //});
 }
+
+app.on("ready", () => {
+    autoUpdater.checkForUpdatesAndNotify();
+});
 
 app.on('ready', () => {
     createWindow();
@@ -43,7 +47,7 @@ app.on('activate', function () {
 ipcMain.on('app_version', (event) => {
     event.sender.send('app_version', { version: app.getVersion() });
 });
-
+/*
 // Add autoUpdate event listeners
 autoUpdater.on('update-available', () => {
     mainWindow.webContents.send('update_available');
@@ -56,3 +60,4 @@ autoUpdater.on('update-downloaded', () => {
 ipcMain.on('restart_app', () => {
     autoUpdater.quitAndInstall();
 });
+*/
