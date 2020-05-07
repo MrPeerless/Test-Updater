@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\docs",
+    "\\docs\\graphics"
   ],
-  "SelectedNode": "\\package.json",
+  "SelectedNode": "\\docs\\graphics\\pp _logo.png",
   "PreviewInSolutionExplorer": false
 }
