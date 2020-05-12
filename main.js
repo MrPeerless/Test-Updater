@@ -29,11 +29,9 @@ function createWindow() {
     });
 
     // Add check for updates
-    //autoUpdater.checkForUpdatesAndNotify();
+    autoUpdater.checkForUpdatesAndNotify();
 }
 
-// Add check for updates
-autoUpdater.checkForUpdatesAndNotify();
 
 app.on('ready', () => {
     createWindow();
@@ -92,10 +90,10 @@ function appVersion() {
 
 // Add autoUpdate event listeners
 autoUpdater.on('update-available', () => {
-    win.webContents.send('update_available');
+    win.webContents.send('fromMain', 'update_available');
 });
 autoUpdater.on('update-downloaded', () => {
-    win.webContents.send('update_downloaded');
+    win.webContents.send('fromMain', 'update_downloaded');
 });
 
 
