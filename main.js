@@ -29,8 +29,11 @@ function createWindow() {
     });
 
     // Add check for updates
-    autoUpdater.checkForUpdatesAndNotify();
+    //autoUpdater.checkForUpdatesAndNotify();
 }
+
+// Add check for updates
+autoUpdater.checkForUpdatesAndNotify();
 
 app.on('ready', () => {
     createWindow();
