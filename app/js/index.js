@@ -12,7 +12,8 @@ window.api.send("toMain", "app_version");
 // RECEIVE ALL MESSAGES FROM MAIN
 window.api.receive('fromMain', (data) => {
     // CHECK WHICH MESSAGE RECEIVED
-    console.log("Message = " + data[0])
+    console.log("Message data[0] = " + data[0])
+    console.log("Message data = " + data)
 
     // App version
     if (data[0] == "app_version") {
@@ -20,13 +21,13 @@ window.api.receive('fromMain', (data) => {
     }
 
     // Update Available
-    if (data[0] == "update_available") {
+    if (data == "update_available") {
         message.innerText = 'A new update is available. Downloading now...';
         notification.classList.remove('hidden');
     }
 
     // Update Downloaded
-    if (data[0] == "update_downloaded") {
+    if (data == "update_downloaded") {
         message.innerText = 'Update Downloaded. It will be installed on restart. Restart now?';
         restartButton.classList.remove('hidden');
         notification.classList.remove('hidden');
