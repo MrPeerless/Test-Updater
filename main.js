@@ -29,12 +29,15 @@ function createWindow() {
     });
 
     // Add check for updates
-    autoUpdater.checkForUpdatesAndNotify();
+    //autoUpdater.checkForUpdatesAndNotify();
 }
+
 
 
 app.on('ready', () => {
     createWindow();
+    // Add check for updates
+    autoUpdater.checkForUpdatesAndNotify();
 });
 
 app.on('window-all-closed', function () {

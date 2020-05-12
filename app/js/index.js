@@ -12,6 +12,7 @@ window.api.send("toMain", "app_version");
 // RECEIVE ALL MESSAGES FROM MAIN
 window.api.receive('fromMain', (data) => {
     // CHECK WHICH MESSAGE RECEIVED
+    console.log("Message = " + data[0])
 
     // App version
     if (data[0] == "app_version") {
