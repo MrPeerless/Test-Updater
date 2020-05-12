@@ -1,9 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\docs",
-    "\\docs\\graphics"
+    "\\app",
+    "\\app\\css",
+    "\\app\\js"
   ],
-  "SelectedNode": "\\docs\\graphics\\pp _logo.png",
+  "SelectedNode": "\\main.js",
   "PreviewInSolutionExplorer": false
 }

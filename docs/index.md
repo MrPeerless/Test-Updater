@@ -1,5 +1,5 @@
 
-<img src="https://mrpeerless.github.io/Test-Updater/docs/graphics/pp_logo.png" height = 100>
+<img src="graphics/pp_logo.png" height = 100>
 
 ## Listen & Explore Music
 ***

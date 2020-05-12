@@ -1,7 +1,7 @@
 {
-  "name": "test-updater",
-  "version": "1.0.1",
-  "description": "Test Updater",
+  "name": "test-app",
+  "version": "1.0.2",
+  "description": "Test App",
   "main": "main.js",
   "author": "Geoff Peerless",
   "scripts": {
@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/MrPeerless/Test-Updater.git"
+    "url": "https://github.com/MrPeerless/Test-App.git"
   },
   "win": {
     "icon": "build/icon.ico"
