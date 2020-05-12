@@ -21,7 +21,7 @@ function createWindow() {
     });
 
     // Open the DevTools.
-    win.webContents.openDevTools()
+    //win.webContents.openDevTools()
 
     win.loadFile('./app/index.html');
     win.on('closed', function () {
