@@ -1,16 +1,22 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+// Require modules
+const { app, BrowserWindow, ipcMain, dialog } = require('electron');
+
+const shell = require('electron').shell;
+
 // Add autoUpdater
 const { autoUpdater } = require('electron-updater');
+
 // Add path and fs
 const path = require("path");
 const fs = require("fs");
+
 // Main window variable
 let win;
 
 // Create the main window
 function createWindow() {
     win = new BrowserWindow({
-        width: 800,
+        width: 1000,
         height: 600,
         webPreferences: {
             nodeIntegration: false,
@@ -21,23 +27,20 @@ function createWindow() {
     });
 
     // Open the DevTools.
-    //win.webContents.openDevTools()
+    win.webContents.openDevTools()
 
     win.loadFile('./app/index.html');
+
     win.on('closed', function () {
         win = null;
-    });
-
-    // Add check for updates
-    //autoUpdater.checkForUpdatesAndNotify();
+    });    
 }
-
-
 
 app.on('ready', () => {
     createWindow();
     // Add check for updates
     autoUpdater.checkForUpdatesAndNotify();
+    
 });
 
 app.on('window-all-closed', function () {
@@ -52,46 +55,91 @@ app.on('activate', function () {
     }
 });
 
-
-
-/*
-ipcMain.on('app_version', (event) => {
-    event.sender.send('app_version', { version: app.getVersion() });
-});
-*/
-
 // RECEIVE ALL MESSAGES FROM RENDERER
 ipcMain.on('toMain', (event, message) => {
-    console.log("message = " + message)
-    var data = [];
-
     // CHECK WHICH MESSAGE RECEIVED
     // App Version
     if (message == "app_version") {
-        // Return message handler
-        data[0] = message;
-        // Call function to get app version
-        data[1] = appVersion();
-        console.log("version = " + data[1])
-        // Send data back to renderer
-        win.webContents.send('fromMain', data);
+        appVersion(message);
     }
 
     // Restart App
     if (message == "restart_app") {
         autoUpdater.quitAndInstall();
     }
+
+    // Open dialog box
+    if (message[0] == "open_dialog") {
+        openDialog(message);
+    }
+
+    // Get file modified date
+    if (message[0] == "modified_date") {
+        modifiedDate(message);
+    }
+
+    // Open external URL
+    if (message[0] == "open_external") {
+        shell.openExternal(message[1]);
+    }
 });
+
+// App Path listener and sender
+ipcMain.on("toApp_path", (event) => {
+    var data = app.getPath('userData');
+    console.log("Main App path = " + data)
+    event.sender.send("fromApp_path", data);
+});
+
+// Path resolve listener and sender
+ipcMain.on("toPath_resolve", (event, message) => {
+    var data = (path.resolve(__dirname + message));
+    console.log("Resolve path = " + data)
+    event.sender.send("fromPath_resolve", data);
+});
+
+
 
 // FUNCTIONS TO RUN FROM IPC MESSAGES
 
 // Function to get app version from package.json
-function appVersion() {
-    var version = app.getVersion();
-    return version;
+function appVersion(message) {
+    var data = [];
+    data[0] = message;
+    data[1] = app.getVersion();
+    win.webContents.send('fromMain', data);
 }
 
-// Add autoUpdate event listeners
+// Function to get modified date
+function modifiedDate(message) {
+    // Data to return message to renderer
+    var data = [];
+    data[0] = message[0];
+    data[1] = fs.statSync(message[1]).mtime
+    console.log("data = " + data)
+    win.webContents.send('fromMain', data);
+}
+
+// Function to open dialog box to select directory
+function openDialog(message) {
+    // Data to return message to renderer
+    var data = [];
+    // Options to display on dialog box
+    var options = { title: message[1], defaultPath: message[2], buttonLabel: message[3], properties: [message[4]] }
+
+    // Open dialog box to browse directory
+    dialog.showOpenDialog(win, options).then(result => {
+        // Set message data to retun to renderer
+        data[0] = message[0];
+        data[1] = result.filePaths;
+        // Send message back to renderer with data result
+        win.webContents.send('fromMain', data);
+    }).catch(err => {
+        console.log(err)
+    });
+}    
+
+// AutoUpdate event listeners
 autoUpdater.on('update-available', () => {
     win.webContents.send('fromMain', 'update_available');
 });
@@ -107,12 +155,5 @@ autoUpdater.on('update-downloaded', () => {
 
 
 
-
-/*
-// Install update event listener
-ipcMain.on('restart_app', () => {
-    autoUpdater.quitAndInstall();
-});
-*/
 
 
