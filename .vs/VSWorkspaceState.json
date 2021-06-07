@@ -2,6 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\app",
+    "\\app\\css",
+    "\\app\\graphics",
     "\\app\\js"
   ],
   "SelectedNode": "\\main.js",

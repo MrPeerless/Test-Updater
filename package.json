@@ -1,6 +1,6 @@
 {
   "name": "test-app",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "Test App",
   "main": "main.js",
   "author": "Geoff Peerless",
@@ -27,5 +27,14 @@
   },
   "win": {
     "icon": "build/icon.ico"
+  },
+  "build": {
+    "extraResources": [
+      {
+        "filter": [
+          "./resources.json"
+        ]
+      }
+    ]
   }
 }

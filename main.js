@@ -10,6 +10,13 @@ const { autoUpdater } = require('electron-updater');
 const path = require("path");
 const fs = require("fs");
 
+// Read variables from resources file in root dir.
+const { readFileSync } = require('fs'); // To read json files
+var resources = JSON.parse(readFileSync('./resources.json'));
+
+console.log("First Name = " + resources.firstName)
+console.log("Surname = " + resources.surname)
+
 // Main window variable
 let win;
 
